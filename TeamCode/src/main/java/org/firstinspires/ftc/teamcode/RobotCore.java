@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.translator.Translator;
+
 public class RobotCore {
     private static DcMotor frontLeft;
     private static DcMotor frontRight;
@@ -46,13 +48,15 @@ public class RobotCore {
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-
-
-    public void setTranslator() {
+    public void gamepadDrive() {
 
     }
 
-    public void setDrivePower(double FrontLeftP, double FrontRightP, double RearLeftP, double RearRightP) {
+    public void setTranslator(Translator t) {
+
+    }
+
+    private void setDrivePower(double FrontLeftP, double FrontRightP, double RearLeftP, double RearRightP) {
         frontLeft.setPower(FrontLeftP);
         frontRight.setPower(FrontRightP);
         rearLeft.setPower(RearLeftP);

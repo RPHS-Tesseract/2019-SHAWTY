@@ -13,6 +13,6 @@ import org.apache.commons.math3.linear.RealMatrix;
  */
 
 public interface Translator {
-    double[] fromVector(RealMatrix VelocityColumn);
+    double[] fromVector(RealMatrix VelocityColumn); // For autonomous
     double[] manipulateRaw(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY, double[] options);
 }

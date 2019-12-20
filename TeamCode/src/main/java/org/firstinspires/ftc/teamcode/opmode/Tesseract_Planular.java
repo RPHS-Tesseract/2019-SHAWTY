@@ -24,7 +24,7 @@ public class Tesseract_Planular extends OpMode {
 
     @Override
     public void loop() {
-
+        
 
         // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
         telemetry.addData("Left stick: ", "X[%d], Y[%d]", gamepad1.left_stick_x, gamepad1.left_stick_y);
