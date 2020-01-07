@@ -13,6 +13,6 @@ import org.apache.commons.math3.linear.RealMatrix;
  */
 
 public interface Translator {
-    double[] fromVector(RealMatrix VelocityColumn); // For autonomous
-    double[] manipulateRaw(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY, double[] options);
+    double[] vectorTranslate(double longitudinal, double lateral, double yaw); // For autonomous
+    double[] gamepadTranslate(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY);
 }
