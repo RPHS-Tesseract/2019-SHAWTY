@@ -18,46 +18,66 @@ public class Planular implements Translator {
        [ 1 -1 ]
        [ 1  1 ] */
 
-    @Override
-    public double[] fromVector(RealMatrix VelocityColumn) {
-        RealVector product = INVERSEMATRIX.multiply(VelocityColumn).getColumnVector(1);
-        return new double[] {
-                product.getEntry(1),
-                product.getEntry(2),
-                product.getEntry(3),
-                product.getEntry(4),
-        };
+    private double deadzoneRadius = 0.08;
+    private double exponent = 2;
+
+    public Planular() {
+
     }
 
-    public double[] fromVector(double longitudinal, double lateral) {
-        return fromVector(MatrixUtils.createColumnRealMatrix(new double[] {longitudinal, lateral}));
+    /*public Planular(double dR, double exp) { // Takes two args, deadzoneRadius and exponent
+        deadzoneRadius = dR;
+        exponent = exp;
+    }*/
+
+    @Override
+    public double[] vectorTranslate(double longitudinal, double lateral, double yaw) {
+        if (yaw == 0) { // Linear
+            RealMatrix VelocityColumn = MatrixUtils.createColumnRealMatrix(new double[] {longitudinal, lateral});
+            RealVector product = INVERSEMATRIX.multiply(VelocityColumn).getColumnVector(1);
+            return new double[] {
+                    product.getEntry(1),
+                    product.getEntry(2),
+                    product.getEntry(3),
+                    product.getEntry(4),
+            };
+        } else { // Non-linear
+            return new double[] { -yaw, yaw, -yaw, yaw };
+        }
     }
 
     @Override
-    public double[] manipulateRaw(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY, double[] options) {
+    public double[] gamepadTranslate(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY) {
         double LeftX = rawLeftX;
         double LeftY = rawLeftY;
         double RightX = rawRightX;
         double RightY = rawRightY;
 
-        double deadzoneRadius = options[1];
-        double exponent = options[2];
+        double radiusL;
+        double radiusR;
 
-        // Sanitize input
+        //double deadzoneRadius = options[1];
+        //double exponent = options[2];
+
+        // Clip input
         LeftX = Range.clip(LeftX, -1, 1);
         LeftY = Range.clip(LeftY, -1, 1);
         RightX = Range.clip(RightX, -1, 1);
         RightY = Range.clip(RightY, -1, 1);
 
         // Get stick distance from center
-        double rL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY));
-        double rR = Math.sqrt((RightX * RightX) + (RightY * RightX));
+        radiusL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY)); // Radius: left stick
+        radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick
 
         // Check if stick is within radial dead zone. If not, 0 its values.
-        LeftX = (rL > deadzoneRadius) ? LeftX : 0;
-        LeftY = (rL > deadzoneRadius) ? LeftY : 0;
-        RightX = (rR > deadzoneRadius) ? RightX : 0;
-        RightY = (rR > deadzoneRadius) ? RightY : 0;
+        LeftX = (radiusL > deadzoneRadius) ? LeftX : 0;
+        LeftY = (radiusL > deadzoneRadius) ? LeftY : 0;
+        RightX = (radiusR > deadzoneRadius) ? RightX : 0;
+        RightY = (radiusR > deadzoneRadius) ? RightY : 0;
+
+        // Recalculate radius
+        /*radiusL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY)); // Radius: left stick
+        radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick*/
 
         // Apply logarithmic control scale
         LeftX = Math.pow(LeftX, exponent);
@@ -72,9 +92,10 @@ public class Planular implements Translator {
         RightY = Math.round(RightY * 1000)/1000.0;
 
         // Give yaw priority.
-        LeftX = rR == 0 ? LeftX : 0;
-        LeftY = rR == 0 ? LeftY : 0;
+        /*LeftX = (radiusR == 0) ? LeftX : 0;
+        LeftY = (radiusR == 0) ? LeftY : 0;*/
 
-        return new double[]{LeftX, LeftY, RightX, RightY};
+        return vectorTranslate(LeftY, LeftX, RightX);
+        //return new double[]{LeftX, LeftY, RightX, RightY};
     }
 }
