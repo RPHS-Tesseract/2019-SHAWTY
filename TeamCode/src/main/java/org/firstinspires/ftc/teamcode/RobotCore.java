@@ -63,7 +63,7 @@ public class RobotCore {
         setDrivePower(powerArray[1], powerArray[2], powerArray[3], powerArray[4]);
     }
 
-    public void setTranslator(Class<Translator> t /*, ArrayList options*/) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void setTranslator(Class<? extends Translator> t /*, ArrayList options*/) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         translator = t.getConstructor().newInstance();
     }
 
