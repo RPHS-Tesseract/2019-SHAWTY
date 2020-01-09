@@ -1,3 +1,8 @@
+/**
+ * Jacob Bazata (jacobbazata@gmail.com)
+ * 12/20/19
+ */
+
 package org.firstinspires.ftc.teamcode.translator;
 
 public class Raw implements Translator {
