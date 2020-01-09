@@ -1,5 +1,5 @@
 /**
- * Jacob Bazata
+ * Jacob Bazata (jacobbazata@gmail.com)
  * 9/16/19
  */
 
@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.RobotCore;
 import org.firstinspires.ftc.teamcode.translator.Planular;
 
-@TeleOp(name="Tesseract_Planular")
+@TeleOp(name="Planular")
 public class Tesseract_Planular extends OpMode {
-    private RobotCore robot = new RobotCore();
+    private RobotCore robot = new RobotCore(Planular.class);
 
     // TO CHANGE THESE GO TO THE CORRESPONDING TRANSLATOR.
     private final double DEADZONERADIUS = 0.08; // DO NOT CHANGE
@@ -22,7 +22,6 @@ public class Tesseract_Planular extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
-        robot.setTranslator(Planular.class);
     }
 
     @Override

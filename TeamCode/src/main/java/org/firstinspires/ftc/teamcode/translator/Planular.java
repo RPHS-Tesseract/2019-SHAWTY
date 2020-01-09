@@ -1,5 +1,5 @@
 /**
- * Jacob Bazata
+ * Jacob Bazata (jacobbazata@gmail.com)
  * 9/16/19
  */
 
@@ -18,8 +18,8 @@ public class Planular implements Translator {
        [ 1 -1 ]
        [ 1  1 ] */
 
-    private double deadzoneRadius = 0.08;
-    private double exponent = 2;
+    private final double deadzoneRadius = 0.08;
+    private final double exponent = 2;
 
     public Planular() {
 
@@ -55,9 +55,6 @@ public class Planular implements Translator {
 
         double radiusL;
         double radiusR;
-
-        //double deadzoneRadius = options[1];
-        //double exponent = options[2];
 
         // Clip input
         LeftX = Range.clip(LeftX, -1, 1);
@@ -96,6 +93,5 @@ public class Planular implements Translator {
         LeftY = (radiusR == 0) ? LeftY : 0;*/
 
         return vectorTranslate(LeftY, LeftX, RightX);
-        //return new double[]{LeftX, LeftY, RightX, RightY};
     }
 }

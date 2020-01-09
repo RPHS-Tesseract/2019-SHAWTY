@@ -1,5 +1,5 @@
 /**
- * Jacob Bazata
+ * Jacob Bazata (jacobbazata@gmail.com)
  * 9/16/19
  */
 
@@ -12,9 +12,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.translator.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-
-import javax.crypto.NullCipher;
 
 public class RobotCore {
     private static DcMotor frontLeft;
@@ -25,7 +22,20 @@ public class RobotCore {
 
     public ElapsedTime runtime = new ElapsedTime();
 
-    public RobotCore() {}
+    // TODO Allow for defining Translator constants at runtime
+    public RobotCore(Class<? extends Translator> t /*, ArrayList options*/) {
+        try {
+            translator = t.getConstructor().newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void init(HardwareMap map) {
         // Map physical motors to variables
@@ -61,10 +71,6 @@ public class RobotCore {
     public void vectorDrive(double lon, double lat, double yaw) {
         double[] powerArray = translator.vectorTranslate(lon, lat, yaw);
         setDrivePower(powerArray[1], powerArray[2], powerArray[3], powerArray[4]);
-    }
-
-    public void setTranslator(Class<? extends Translator> t /*, ArrayList options*/) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        translator = t.getConstructor().newInstance();
     }
 
     private void setDrivePower(double FrontLeftPower, double FrontRightPower, double RearLeftPower, double RearRightPower) {
