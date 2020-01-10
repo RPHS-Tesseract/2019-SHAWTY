@@ -29,7 +29,7 @@ public class Tesseract_Planular extends OpMode {
         robot.gamepadDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_stick_y);
 
         // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
-        telemetry.addData("Left stick: ", "X[%d], Y[%d]", gamepad1.left_stick_x, gamepad1.left_stick_y);
-        telemetry.addData("Right stick: ", "X[%d], Y[%d]", gamepad1.right_stick_x, gamepad1.right_stick_y);
+        telemetry.addData("Left stick: ", "X[%f], Y[%f]", gamepad1.left_stick_x, gamepad1.left_stick_y);
+        telemetry.addData("Right stick: ", "X[%f], Y[%f]", gamepad1.right_stick_x, gamepad1.right_stick_y);
     }
 }
