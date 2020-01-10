@@ -12,5 +12,5 @@
 apply from: '../build.common.gradle'
 
 dependencies {
-    implementation files('C:/Users/nitro/Desktop/RPHS-Tesseract/SkyStone-2019-SHAWTY/libs/java-rt-jar-stubs-1.5.0.jar')
+    implementation files('./../libs/java-rt-jar-stubs-1.5.0.jar')
 }
