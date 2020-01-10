@@ -65,12 +65,12 @@ public class RobotCore {
 
     public void gamepadDrive(double LX, double LY, double RX, double RY) {
         double[] powerArray = translator.gamepadTranslate(LX, LY, RX, RY);
-        setDrivePower(powerArray[1], powerArray[2], powerArray[3], powerArray[4]);
+        setDrivePower(powerArray[0], powerArray[1], powerArray[2], powerArray[3]);
     }
 
     public void vectorDrive(double lon, double lat, double yaw) {
         double[] powerArray = translator.vectorTranslate(lon, lat, yaw);
-        setDrivePower(powerArray[1], powerArray[2], powerArray[3], powerArray[4]);
+        setDrivePower(powerArray[0], powerArray[1], powerArray[2], powerArray[3]);
     }
 
     private void setDrivePower(double FrontLeftPower, double FrontRightPower, double RearLeftPower, double RearRightPower) {
