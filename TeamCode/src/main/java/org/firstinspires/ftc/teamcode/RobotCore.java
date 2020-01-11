@@ -18,8 +18,8 @@ public class RobotCore {
     private static DcMotor frontRight;
     private static DcMotor rearLeft;
     private static DcMotor rearRight;
-    private static Translator translator = new Raw();
 
+    public static Translator translator;
     public ElapsedTime runtime = new ElapsedTime();
 
     // TODO Allow for defining Translator constants at runtime
