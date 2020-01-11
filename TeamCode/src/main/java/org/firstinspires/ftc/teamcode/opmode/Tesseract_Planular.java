@@ -23,6 +23,7 @@ public class Tesseract_Planular extends OpMode {
     public void init() {
         robot.init(hardwareMap);
         telemetry.addData("Translator: ", "%s", robot.translator.getClass().getName());
+        telemetry.update();
     }
 
     @Override
