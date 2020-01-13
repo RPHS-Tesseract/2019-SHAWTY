@@ -34,13 +34,14 @@ public class Planular implements Translator {
     public double[] vectorTranslate(double longitudinal, double lateral, double yaw) {
         if (yaw == 0) { // Linear
             RealMatrix VelocityColumn = MatrixUtils.createColumnRealMatrix(new double[] {longitudinal, lateral});
-            RealVector product = INVERSEMATRIX.multiply(VelocityColumn).getColumnVector(1);
-            return new double[] {
-                    product.getEntry(1),
-                    product.getEntry(2),
-                    product.getEntry(3),
-                    product.getEntry(4),
-            };
+            double[] product = INVERSEMATRIX.multiply(VelocityColumn).getColumn(0);
+            return product;
+            /*return new double[] {
+                    product[0],
+                    product[1],
+                    product[2],
+                    product[3]
+            };*/
         } else { // Non-linear
             return new double[] { -yaw, yaw, -yaw, yaw };
         }
