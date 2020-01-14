@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCore;
-import org.firstinspires.ftc.teamcode.translator.Planular;
+import org.firstinspires.ftc.teamcode.translator.PlanularTranslator;
 
 @TeleOp(name="$HAWTY")
-public class Tesseract_Planular extends OpMode {
-    private RobotCore robot = new RobotCore(Planular.class);
+public class PlanularTeleOp extends OpMode {
+    private RobotCore robot = new RobotCore(PlanularTranslator.class);
 
     // TO CHANGE THESE GO TO THE CORRESPONDING TRANSLATOR.
     private final double DEADZONERADIUS = 0.08;

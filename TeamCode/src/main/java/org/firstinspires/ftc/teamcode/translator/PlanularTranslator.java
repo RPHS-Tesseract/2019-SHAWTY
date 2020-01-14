@@ -9,9 +9,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 
-public class Planular implements Translator {
+public class PlanularTranslator implements Translator {
     private final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {{1, 1}, {1, -1}, {1, -1}, {1,1}});
     /* [ 1  1 ]
        [ 1 -1 ]
@@ -21,11 +20,11 @@ public class Planular implements Translator {
     private final double deadzoneRadius = 0.08;
     private final double exponent = 2;
 
-    public Planular() {
+    public PlanularTranslator() {
 
     }
 
-    /*public Planular(double dR, double exp) { // Takes two args, deadzoneRadius and exponent
+    /*public PlanularTranslator(double dR, double exp) { // Takes two args, deadzoneRadius and exponent
         deadzoneRadius = dR;
         exponent = exp;
     }*/
@@ -90,8 +89,8 @@ public class Planular implements Translator {
         RightY = Math.round(RightY * 1000)/1000.0;
 
         // Give yaw priority.
-        /*LeftX = (radiusR == 0) ? LeftX : 0;
-        LeftY = (radiusR == 0) ? LeftY : 0;*/
+        LeftX = (radiusR == 0) ? LeftX : 0;
+        LeftY = (radiusR == 0) ? LeftY : 0;
 
         return vectorTranslate(LeftY, LeftX, RightX);
     }

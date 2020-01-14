@@ -8,8 +8,8 @@ package org.firstinspires.ftc.teamcode.translator;
 import org.apache.commons.math3.linear.RealMatrix;
 
 /* Translators have two purposes:
-    1. Convert desired-velocity vectors to motor power arrays
-    2. Modify raw controller input
+    1. Convert desired velocity vectors to motor power arrays
+    2. Convert gamepad input into motor power arrays
  */
 
 public interface Translator {
