@@ -21,8 +21,7 @@ public class RobotCore {
 
     public static Drivetrain drivetrain;
     public ElapsedTime runtime = new ElapsedTime();
-
-    // TODO Allow for defining Translator constants at runtime
+    
     public RobotCore(Class<? extends Drivetrain> t, Object... args) {
         try {
             drivetrain = t.getConstructor(Object.class).newInstance(args);
