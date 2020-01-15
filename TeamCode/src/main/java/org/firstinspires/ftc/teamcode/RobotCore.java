@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.translator.*;
+import org.firstinspires.ftc.teamcode.drivetrain.Drivetrain;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -19,13 +19,13 @@ public class RobotCore {
     private static DcMotor rearLeft;
     private static DcMotor rearRight;
 
-    public static Translator translator;
+    public static Drivetrain drivetrain;
     public ElapsedTime runtime = new ElapsedTime();
 
     // TODO Allow for defining Translator constants at runtime
-    public RobotCore(Class<? extends Translator> t /*, ArrayList options*/) {
+    public RobotCore(Class<? extends Drivetrain> t, Object... args) {
         try {
-            translator = t.getConstructor().newInstance();
+            drivetrain = t.getConstructor(Object.class).newInstance(args);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -64,12 +64,12 @@ public class RobotCore {
     }
 
     public void gamepadDrive(double LX, double LY, double RX, double RY) {
-        double[] powerArray = translator.gamepadTranslate(LX, LY, RX, RY);
+        double[] powerArray = drivetrain.gamepadTranslate(LX, LY, RX, RY);
         setDrivePower(powerArray[0], powerArray[1], powerArray[2], powerArray[3]);
     }
 
     public void vectorDrive(double lon, double lat, double yaw) {
-        double[] powerArray = translator.vectorTranslate(lon, lat, yaw);
+        double[] powerArray = drivetrain.vectorTranslate(lon, lat, yaw);
         setDrivePower(powerArray[0], powerArray[1], powerArray[2], powerArray[3]);
     }
 

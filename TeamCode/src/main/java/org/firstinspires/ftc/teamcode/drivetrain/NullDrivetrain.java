@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.translator;
+package org.firstinspires.ftc.teamcode.drivetrain;
 
 /* This Translator will do nothing. */
-public class NullTranslator implements Translator {
-    public NullTranslator() {}
+public class NullDrivetrain implements Drivetrain {
+    public NullDrivetrain() {}
 
     @Override
     public double[] vectorTranslate(double longitudinal, double lateral, double yaw) {
