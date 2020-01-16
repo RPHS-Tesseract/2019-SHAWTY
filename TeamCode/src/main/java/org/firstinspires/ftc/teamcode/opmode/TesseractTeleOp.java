@@ -13,11 +13,12 @@ import org.firstinspires.ftc.teamcode.drivetrain.PlanarDrivetrain;
 
 @TeleOp(name="$HAWTY")
 public class TesseractTeleOp extends OpMode {
-    // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
-    private RobotCore robot = new RobotCore(hardwareMap, PlanarDrivetrain.class, 0.02, 2); // (Drivetrain, DeadzoneRadius, ControlExponent)
+    private RobotCore robot;
 
     @Override
     public void init() {
+        // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
+        robot = new RobotCore(hardwareMap, PlanarDrivetrain.class, 0.02, 2.0); // (Drivetrain, DeadzoneRadius, ControlExponent)
         robot.registerDefaults();
         telemetry.addData("Drivetrain: ", "%s", robot.drivetrain.getClass().getSimpleName());
         telemetry.update();

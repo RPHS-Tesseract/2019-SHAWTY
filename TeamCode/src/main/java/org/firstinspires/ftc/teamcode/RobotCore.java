@@ -30,7 +30,7 @@ public class RobotCore {
     public RobotCore(HardwareMap hwm, Class<? extends Drivetrain> t, Object... args) {
         map = hwm;
         try {
-            drivetrain = t.getConstructor(Object.class).newInstance(args);
+            drivetrain = t.getConstructor(Object[].class).newInstance(new Object[]{args});
             timer = new ElapsedTime();
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -54,10 +54,10 @@ public class RobotCore {
         rearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Set motor Direction
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.FORWARD);
-        rearRight.setDirection(DcMotor.Direction.FORWARD);
+        rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        rearRight.setDirection(DcMotor.Direction.REVERSE);
 
         // Set motor ZeroPowerBehavior
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -65,10 +65,10 @@ public class RobotCore {
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        registrar.put("frontLeft", frontLeft);
-        registrar.put("frontRight", frontRight);
-        registrar.put("rearLeft", rearLeft);
-        registrar.put("rearRight", rearRight);
+        //registrar.put("frontLeft", frontLeft);
+        //registrar.put("frontRight", frontRight);
+        //registrar.put("rearLeft", rearLeft);
+        //registrar.put("rearRight", rearRight);
     }
 
     public void registerDCMotor(Class<? extends DcMotor> type, String deviceName, DcMotor.Direction direction) {
@@ -76,7 +76,7 @@ public class RobotCore {
         newMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         newMotor.setDirection(direction);
         newMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        registrar.put("deviceName", newMotor);
+        registrar.put(deviceName, newMotor);
     }
 
     public void gamepadDrive(double LX, double LY, double RX, double RY) {
