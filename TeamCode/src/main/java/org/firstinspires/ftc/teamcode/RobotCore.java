@@ -6,37 +6,41 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drivetrain.Drivetrain;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 public class RobotCore {
-    private static DcMotor frontLeft;
-    private static DcMotor frontRight;
-    private static DcMotor rearLeft;
-    private static DcMotor rearRight;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor rearLeft;
+    private DcMotor rearRight;
 
-    public static Drivetrain drivetrain;
-    public ElapsedTime runtime = new ElapsedTime();
-    
-    public RobotCore(Class<? extends Drivetrain> t, Object... args) {
+    public HardwareMap map;
+    public Drivetrain drivetrain;
+    public ElapsedTime timer;
+    public HashMap<String, HardwareDevice> registrar;
+
+    public RobotCore(HardwareMap hwm, Class<? extends Drivetrain> t, Object... args) {
+        map = hwm;
         try {
             drivetrain = t.getConstructor(Object.class).newInstance(args);
-        } catch (IllegalAccessException e) {
+            timer = new ElapsedTime();
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e); // Propagate error wrapped in RuntimeException
         }
+
     }
 
-    public void init(HardwareMap map) {
+    // Register default drive motors
+    public void registerDefaults() {
         // Map physical motors to variables
         frontLeft = map.get(DcMotor.class, "FrontLeft");
         frontRight = map.get(DcMotor.class, "FrontRight");
@@ -60,6 +64,19 @@ public class RobotCore {
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        registrar.put("frontLeft", frontLeft);
+        registrar.put("frontRight", frontRight);
+        registrar.put("rearLeft", rearLeft);
+        registrar.put("rearRight", rearRight);
+    }
+
+    public void registerDCMotor(Class<? extends DcMotor> type, String deviceName, DcMotor.Direction direction) {
+        DcMotor newMotor = map.get(type, deviceName);
+        newMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        newMotor.setDirection(direction);
+        newMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        registrar.put("deviceName", newMotor);
     }
 
     public void gamepadDrive(double LX, double LY, double RX, double RY) {

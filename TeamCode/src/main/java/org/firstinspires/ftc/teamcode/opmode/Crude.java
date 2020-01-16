@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 
 @TeleOp(name="Crude")
 public class Crude extends OpMode {
@@ -47,55 +45,47 @@ public class Crude extends OpMode {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setPower(double FL, double FR, double RL, double RR, double LP) {
+    @Override
+    public void loop() {
+        double FL = 0;
+        double FR = 0;
+        double RL = 0;
+        double RR = 0;
+        double LP = 0;
+
+        LP = gamepad1.a ? 0.5 : gamepad1.b ? -0.5 : 0;
+
+        if (Math.abs(gamepad1.left_stick_y) > deadzone) {
+            FL = gamepad1.left_stick_y;
+            FR = gamepad1.left_stick_y;
+            RL = -gamepad1.left_stick_y;
+            RR = -gamepad1.left_stick_y;
+        } else if (Math.abs(gamepad1.left_trigger - gamepad1.right_trigger) > deadzone) {
+            double lat = gamepad1.left_trigger - gamepad1.right_trigger;
+            FL = -lat;
+            FR = lat;
+            RL = -lat;
+            RR = lat;
+        } else if (Math.abs(gamepad1.right_stick_x) > deadzone) {
+            FL = -gamepad1.right_stick_x;
+            FR = gamepad1.right_stick_x;
+            RL = gamepad1.right_stick_x;
+            RR = -gamepad1.right_stick_x;
+        }
+
+        if (gamepad1.left_stick_button && gamepad1.y ) {
+            FL = 0;
+            FR = 0;
+            RL = 0;
+            RR = 0;
+            LP = 0;
+            System.exit(-1);
+        }
+
         frontLeft.setPower(FL);
         frontRight.setPower(FR);
         rearLeft.setPower(RL);
         rearRight.setPower(RR);
         lift.setPower(LP);
-    }
-
-    @Override
-    public void loop() {
-        double longitinudal = 0;
-        double lat = 0;
-        double yaw = 0;
-        double liftPower = 0;
-        boolean skip = false;
-
-        setPower(0,0,0,0, 0);
-
-        if (gamepad1.a) {
-            liftPower = .5;
-            setPower(0,0,0,0, liftPower);
-        } else if (gamepad1.b) {
-            liftPower = -.5;
-            setPower(0,0,0,0, liftPower);
-        }
-
-        if (Math.abs(gamepad1.left_stick_y) > deadzone && !skip) {
-            skip = true;
-            longitinudal= gamepad1.left_stick_y;
-            setPower(longitinudal, longitinudal, -longitinudal, -longitinudal, liftPower);
-        }
-
-        if (Math.abs(gamepad1.left_trigger - gamepad1.right_trigger) > deadzone && !skip) {
-            skip = true;
-            lat = gamepad1.left_trigger - gamepad1.right_trigger;
-            //setPower(lat, -lat, -lat, lat, liftPower);
-            setPower(-lat, lat, -lat, lat, liftPower);
-        }
-
-        if (Math.abs(gamepad1.right_stick_x) > deadzone && !skip) {
-            skip = true;
-            yaw = gamepad1.right_stick_x;
-            //setPower(yaw, -yaw, yaw, -yaw, liftPower);
-            setPower(-yaw, yaw, yaw, -yaw, liftPower);
-        }
-
-            if (gamepad1.left_stick_button && gamepad1.y ) {
-            setPower(0,0,0,0,0);
-            System.exit(0);
-        }
     }
 }

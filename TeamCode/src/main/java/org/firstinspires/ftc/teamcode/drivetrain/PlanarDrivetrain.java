@@ -12,15 +12,14 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 /* Holonomic drivetrain with separated yaw (Robot will be rotated independently of x/y motion) */
 public class PlanarDrivetrain implements Drivetrain {
+    private final double deadzoneRadius;
+    private final double exponent;
     private final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {
             {1, -1},
             {1,  1},
             {1,  1},
             {1, -1}
     });
-
-    private double deadzoneRadius;
-    private double exponent;
 
     public PlanarDrivetrain(Object... args) { // Takes two args, deadzoneRadius and exponent
         deadzoneRadius = (double) args[0];
@@ -45,9 +44,6 @@ public class PlanarDrivetrain implements Drivetrain {
         double RightX = rawRightX;
         double RightY = rawRightY;
 
-        double radiusL;
-        double radiusR;
-
         // Clip input
         LeftX = Range.clip(LeftX, -1, 1);
         LeftY = Range.clip(LeftY, -1, 1);
@@ -55,8 +51,8 @@ public class PlanarDrivetrain implements Drivetrain {
         RightY = Range.clip(RightY, -1, 1);
 
         // Get stick distance from center
-        radiusL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY)); // Radius: left stick
-        radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick
+        double radiusL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY)); // Radius: left stick
+        double radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick
 
         // Check if stick is within radial dead zone. If not, 0 its values.
         LeftX = (radiusL > deadzoneRadius) ? LeftX : 0;
