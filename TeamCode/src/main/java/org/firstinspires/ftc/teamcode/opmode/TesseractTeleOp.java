@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RobotCore;
-import org.firstinspires.ftc.teamcode.drivetrain.PlanarDrivetrain;
+import org.firstinspires.ftc.teamcode.drivetrain.HolonomicDrivetrain;
 
 @TeleOp(name="$HAWTY")
 public class TesseractTeleOp extends OpMode {
@@ -18,7 +18,7 @@ public class TesseractTeleOp extends OpMode {
     @Override
     public void init() {
         // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
-        robot = new RobotCore(hardwareMap, PlanarDrivetrain.class, 0.02, 2.0); // (Drivetrain, DeadzoneRadius, ControlExponent)
+        robot = new RobotCore(hardwareMap, HolonomicDrivetrain.class, 0.02, 2.0); // (Drivetrain, DeadzoneRadius, ControlExponent)
         robot.registerDefaults();
         telemetry.addData("Drivetrain: ", "%s", robot.drivetrain.getClass().getSimpleName());
         telemetry.update();
