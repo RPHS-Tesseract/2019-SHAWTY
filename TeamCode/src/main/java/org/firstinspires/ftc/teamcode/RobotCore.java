@@ -6,7 +6,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -22,15 +21,16 @@ public class RobotCore {
     private DcMotor rearLeft;
     private DcMotor rearRight;
 
-    public HardwareMap map;
+    private HardwareMap map;
+    private HashMap<String, HardwareDevice> registrar;
+
     public Drivetrain drivetrain;
     public ElapsedTime timer;
-    public HashMap<String, HardwareDevice> registrar;
 
-    public RobotCore(HardwareMap hwm, Class<? extends Drivetrain> t, Object... args) {
+    public RobotCore(HardwareMap hwm, Class<? extends Drivetrain> t) {
         map = hwm;
         try {
-            drivetrain = t.getConstructor(Object[].class).newInstance(new Object[]{args});
+            drivetrain = t.getConstructor().newInstance();
             timer = new ElapsedTime();
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -48,6 +48,7 @@ public class RobotCore {
         rearRight = map.get(DcMotor.class, "RearRight");
 
         // Set motor RunMode
+
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -62,7 +63,7 @@ public class RobotCore {
         // Set motor ZeroPowerBehavior
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //registrar.put("frontLeft", frontLeft);
@@ -71,13 +72,13 @@ public class RobotCore {
         //registrar.put("rearRight", rearRight);
     }
 
-    public void registerDCMotor(Class<? extends DcMotor> type, String deviceName, DcMotor.Direction direction) {
+    /*public void registerDCMotor(Class<? extends DcMotor> type, String deviceName, DcMotor.Direction direction) {
         DcMotor newMotor = map.get(type, deviceName);
         newMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         newMotor.setDirection(direction);
         newMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         registrar.put(deviceName, newMotor);
-    }
+    }*/
 
     public void gamepadDrive(double LX, double LY, double RX, double RY) {
         double[] powerArray = drivetrain.gamepadTranslate(LX, LY, RX, RY);
@@ -89,10 +90,10 @@ public class RobotCore {
         setDrivePower(powerArray[0], powerArray[1], powerArray[2], powerArray[3]);
     }
 
-    private void setDrivePower(double FrontLeftPower, double FrontRightPower, double RearLeftPower, double RearRightPower) {
-        frontLeft.setPower(FrontLeftPower);
-        frontRight.setPower(FrontRightPower);
-        rearLeft.setPower(RearLeftPower);
-        rearRight.setPower(RearRightPower);
+    public void setDrivePower(double FL, double FR, double RL, double RR) {
+        frontLeft.setPower(FL);
+        frontRight.setPower(FR);
+        rearLeft.setPower(RL);
+        rearRight.setPower(RR);
     }
 }

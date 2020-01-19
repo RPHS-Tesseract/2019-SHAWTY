@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.firstinspires.ftc.teamcode.RobotConstants;
 
-/* Holonomic drivetrain with separated yaw (Robot will be rotated independently of x/y motion) */
+/* Holonomic drivetrain with separatef yaw (Robot will be rotated independently of x/y motion) */
 public class HolonomicDrivetrain implements Drivetrain {
-    private final double deadzoneRadius;
-    private final double exponent;
+    private double exponent = RobotConstants.ControlExponent;
     private static final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {
             {1, -1, -1},
             {1,  1,  1},
@@ -21,10 +21,7 @@ public class HolonomicDrivetrain implements Drivetrain {
             {1, -1,  1}
     });
 
-    public HolonomicDrivetrain(Object[] args) { // Takes two args, deadzoneRadius and exponent
-        deadzoneRadius = (double) args[0];
-        exponent = (double) args[1];
-    }
+    public HolonomicDrivetrain() {}
 
     @Override
     public double[] vectorTranslate(double longitudinal, double lateral, double yaw) {
@@ -45,16 +42,6 @@ public class HolonomicDrivetrain implements Drivetrain {
         LeftY = Range.clip(LeftY, -1, 1);
         RightX = Range.clip(RightX, -1, 1);
         RightY = Range.clip(RightY, -1, 1);
-
-        // Get stick distance from center
-        double radiusL = Math.sqrt((LeftX * LeftX) + (LeftY * LeftY)); // Radius: left stick
-        double radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick
-
-        // Check if stick is within radial dead zone. If not, 0 its values.
-        LeftX = (radiusL > deadzoneRadius) ? LeftX : 0;
-        LeftY = (radiusL > deadzoneRadius) ? LeftY : 0;
-        RightX = (radiusR > deadzoneRadius) ? RightX : 0;
-        RightY = (radiusR > deadzoneRadius) ? RightY : 0;
 
         // Apply logarithmic control scale
         LeftX = Math.signum(LeftX) * Math.pow(LeftX, exponent);
