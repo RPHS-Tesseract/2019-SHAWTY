@@ -49,7 +49,7 @@ public class PlanarDrivetrain implements Drivetrain {
         RightY = Range.clip(RightY, -1, 1);
 
         // Recalculate RStick radius
-        double radiusR = Math.sqrt((RightX * RightX) + (RightY * RightX)); // Radius: right stick
+        double radiusR = Math.sqrt((RightX * RightX) + (RightY * RightY)); // Radius: right stick
 
         // Apply logarithmic control scale
         LeftX = Math.signum(LeftX) * Math.pow(LeftX, exponent);
