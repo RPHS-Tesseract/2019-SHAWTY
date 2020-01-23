@@ -6,6 +6,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -57,7 +58,7 @@ public class RobotCore {
         // Set motor Direction
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
-        rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        rearLeft.setDirection(DcMotor.Direction.FORWARD);
         rearRight.setDirection(DcMotor.Direction.REVERSE);
 
         // Set motor ZeroPowerBehavior
