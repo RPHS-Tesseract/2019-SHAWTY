@@ -11,7 +11,7 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.firstinspires.ftc.teamcode.RobotConstants;
 
-/* Holonomic drivetrain with separatef yaw (Robot will be rotated independently of x/y motion) */
+/* Fully holonomic drivetrain */
 public class HolonomicDrivetrain implements Drivetrain {
     private double exponent = RobotConstants.ControlExponent;
     private static final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {
