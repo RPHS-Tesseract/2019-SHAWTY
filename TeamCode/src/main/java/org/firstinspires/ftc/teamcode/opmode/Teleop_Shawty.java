@@ -39,7 +39,7 @@ public class Teleop_Shawty extends OpMode {
 
     @Override
     public void loop() {
-        robot.gamepadDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_stick_y);
+        robot.gamepadDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, gamepad1.right_stick_y);
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("LS: ", String.format(Locale.US, "X[%.3f] Y[%.3f]", gamepad1.left_stick_x, gamepad1.left_stick_y));
