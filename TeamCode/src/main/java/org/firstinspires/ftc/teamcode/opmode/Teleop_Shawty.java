@@ -30,17 +30,17 @@ public class Teleop_Shawty extends OpMode {
         // Visualize scale: https://www.desmos.com/calculator/0xtjtrmqfk
         robot = new RobotCore(hardwareMap, HolonomicDrivetrain.class);
         robot.registerDefaults();
-
-        gamepad1.setJoystickDeadzone(constants.JoystickDeadzone);
+        
+        gamepad1.setJoystickDeadzone(0.02f);
     }
 
     @Override
     public void loop() {
         robot.gamepadDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_trigger - gamepad1.left_trigger, gamepad1.right_stick_y);
 
-        telemetry.addLine()
-                .addData("LS:", "X[%.3f] Y[%.3f]", gamepad1.left_stick_x, gamepad1.left_stick_y)
-                .addData("RS:", "X[%.3f] Y[%.3f]", gamepad1.right_stick_x, gamepad1.right_stick_y);
+
+        telemetry.addData("LS:", "X[%.3f] Y[%.3f]", gamepad1.left_stick_x, gamepad1.left_stick_y);
+        telemetry.addData("RS:", "X[%.3f] Y[%.3f]", gamepad1.right_stick_x, gamepad1.right_stick_y);
         telemetry.update();
     }
 }

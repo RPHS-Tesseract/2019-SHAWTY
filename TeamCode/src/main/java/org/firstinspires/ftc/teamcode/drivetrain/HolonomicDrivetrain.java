@@ -32,6 +32,8 @@ public class HolonomicDrivetrain implements Drivetrain {
 
     @Override
     public double[] gamepadTranslate(double rawLeftX, double rawLeftY, double rawRightX, double rawRightY) {
+        exponent = RobotConstants.ControlExponent;
+
         double LeftX = rawLeftX;
         double LeftY = rawLeftY;
         double RightX = rawRightX;
