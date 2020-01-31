@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.AutonomousConfig;
 import org.firstinspires.ftc.teamcode.RobotCore;
 import org.firstinspires.ftc.teamcode.drivetrain.HolonomicDrivetrain;
-import org.firstinspires.ftc.teamcode.drivetrain.NullDrivetrain;
 
 @Autonomous(name = "Auto_Left")
 public class Auto_Left extends LinearOpMode {
@@ -15,12 +14,14 @@ public class Auto_Left extends LinearOpMode {
     private ElapsedTime timer;
 
     private void sleep(double ms) throws InterruptedException {
-        long long_ms = (long) ms;
-        Thread.sleep(long_ms);
+        double init = timer.milliseconds();
+        while ( (timer.milliseconds() - init) < ms) {
+
+        }
     }
 
     @Override
-    public void runOpMode() throws InterruptedException{
+    public void runOpMode() throws InterruptedException {
         robot = new RobotCore(hardwareMap, HolonomicDrivetrain.class);
         timer = robot.timer;
 
