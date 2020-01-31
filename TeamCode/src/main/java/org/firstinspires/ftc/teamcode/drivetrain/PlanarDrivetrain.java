@@ -15,10 +15,10 @@ import org.firstinspires.ftc.teamcode.RobotConstants;
 public class PlanarDrivetrain implements Drivetrain {
     private double exponent;
     private static final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {
-            {1, -1},
-            {1,  1},
-            {1,  1},
-            {1, -1}
+            {1,  1}, // FL
+            {1, -1}, // FR
+            {1, -1}, // RL
+            {1,  1}, // RR
     });
 
     public PlanarDrivetrain() {}
