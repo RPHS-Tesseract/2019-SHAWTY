@@ -39,6 +39,8 @@ public class Auto_Left extends LinearOpMode {
 
         ClampLeft.setPosition(0.5);
         ClampRight.setPosition(0.5);
+
+        Thread.sleep(1000);
         
         robot.vectorDrive(-1, -0.85, 0);
         sleep(AutonomousConfig.Time1);
