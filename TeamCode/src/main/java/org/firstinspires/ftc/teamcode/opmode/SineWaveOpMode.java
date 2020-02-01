@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous
 public class SineWaveOpMode extends LinearOpMode {
     public static double AMPLITUDE = 10;
-    public static double PHASE = 90;
+    public static double WAVELENGTH = 90;
     public static double FREQUENCY = 0.5;
 
     @Override
@@ -26,7 +26,10 @@ public class SineWaveOpMode extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            telemetry.addData("x", AMPLITUDE * Math.sin(2 * Math.PI * FREQUENCY * getRuntime() + Math.toRadians(PHASE)));
+            telemetry.addData(
+                    "x",
+                    AMPLITUDE * Math.pow(Math.E, WAVELENGTH * getRuntime()) * Math.cos(getRuntime())
+            );
             telemetry.update();
         }
     }

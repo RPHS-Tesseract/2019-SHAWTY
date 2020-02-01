@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.AutonomousConfig;
 import org.firstinspires.ftc.teamcode.RobotCore;
 import org.firstinspires.ftc.teamcode.drivetrain.HolonomicDrivetrain;
 
-@Autonomous(name = "Auto_Left")
+@Autonomous(name = "Auto_Red")
 public class Auto_Left extends LinearOpMode {
     private RobotCore robot;
     private ElapsedTime timer;
@@ -37,17 +37,25 @@ public class Auto_Left extends LinearOpMode {
         waitForStart();
         timer.reset();
 
-        ClampLeft.setPosition(0.5);
-        ClampRight.setPosition(0.5);
-
-        Thread.sleep(1000);
-        
         robot.vectorDrive(-1, -0.85, 0);
         sleep(AutonomousConfig.Time1);
+
+        robot.vectorDrive(0,0,0);
+        ClampLeft.setPosition(.3);
+        ClampRight.setPosition(.5);
+        sleep(AutonomousConfig.ClampDelay);
+
         robot.vectorDrive(1,0,0);
         sleep(AutonomousConfig.Time2);
+
+        ClampLeft.setDirection(Servo.Direction.REVERSE);
+        ClampLeft.setPosition(0);
+        ClampRight.setPosition(0);
+        sleep(AutonomousConfig.ClampDelay);
+
         robot.vectorDrive(0,1,0);
         sleep(AutonomousConfig.Time3);
+
         robot.vectorDrive(0,0,0);
     }
 }
