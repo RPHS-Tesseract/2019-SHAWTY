@@ -33,11 +33,8 @@ public class Teleop_Shawty extends OpMode {
     private Servo ClampLeft;
     private Servo ClampRight;
 
-    private double cycle = 0;
     private boolean ClawOpen = false;
     private boolean ClampDown = false;
-
-    private double cooldown;
 
     @Override
     public void init() {
@@ -73,11 +70,6 @@ public class Teleop_Shawty extends OpMode {
         Claw.setPosition(ClawOpen ? 0.1 : 0.5);
         //ClampLeft.setPosition(ClampDown ? 0 : 0.3);
         //ClampRight.setPosition(ClampDown ? 0 : 0.3);
-
-        if (gamepad1.a && getRuntime() - cooldown > .5) {
-            ClawOpen = !ClawOpen;
-            cooldown = getRuntime();
-        }
 
         telemetry.addData("LS:", "X[%.3f] Y[%.3f]", gamepad1.left_stick_x, gamepad1.left_stick_y);
         telemetry.addData("RS:", "X[%.3f] Y[%.3f]", gamepad1.right_stick_x, gamepad1.right_stick_y);
